@@ -1,8 +1,8 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
-	<groupId>com.savvis.spirits</groupId>
-	<artifactId>report</artifactId>
+	<groupId>reporte</groupId>
+	<artifactId>reporte</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<packaging>pom</packaging>
 	<name>Report Project</name>
@@ -12,27 +12,6 @@
 		<module>report-features</module>
 		<module>report-web</module>
 	</modules>
-
-	<properties>
-		<jdk.version>1.7</jdk.version>
-		<nexus.url>http://code.it.savvis.net/nexus/content</nexus.url>
-		<owb.version>1.2.6</owb.version>
-	</properties>
-
-	<build>
-		<finalName>report</finalName>
-		<plugins>
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-compiler-plugin</artifactId>
-				<version>2.5.1</version>
-				<configuration>
-					<source>${jdk.version}</source>
-					<target>${jdk.version}</target>
-				</configuration>
-			</plugin>
-		</plugins>
-	</build>
 
 	<dependencies>
 		<!-- CDI -->
@@ -73,23 +52,82 @@
 			<version>1.7.7</version>
 		</dependency>
 	</dependencies>
-<!--
-	<repositories>
-		<repository>
-			<id>savvis-cto-metagroup</id>
-			<url>${nexus.url}/groups/savvis-cto-metagroup</url>
-			<snapshots>
-				<enabled>false</enabled>
-			</snapshots>
-		</repository>
-		<repository>
-			<id>prime-repo</id>
-			<name>Prime Repo</name>
-			<url>http://repository.primefaces.org</url>
-		</repository>
-	</repositories>
--->
+
+
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<version>2.5.1</version>
+				<configuration>
+					<source>${jdk.version}</source>
+					<target>${jdk.version}</target>
+				</configuration>
+			</plugin>
+		</plugins>
+	</build>
+
 	<profiles>
+		<profile>
+			<id>centuryLinkEnv</id>
+			<activation>
+				<activeByDefault>true</activeByDefault>
+			</activation>
+			<repositories>
+				<repository>
+					<id>savvis-cto-metagroup</id>
+					<url>${nexus.url}/groups/savvis-cto-metagroup</url>
+					<snapshots>
+						<enabled>false</enabled>
+					</snapshots>
+				</repository>
+				<repository>
+					<id>prime-repo</id>
+					<name>Prime Repo</name>
+					<url>http://repository.primefaces.org</url>
+				</repository>
+			</repositories>
+			
+			<!-- Centurylink internal repo for plugin -->
+			<pluginRepositories>
+				<pluginRepository>
+					<id>central</id>
+					<url>${nexus.url}/groups/public</url>
+					<snapshots>
+						<enabled>false</enabled>
+					</snapshots>
+				</pluginRepository>
+				<pluginRepository>
+					<id>snapshots</id>
+					<url>${nexus.url}/groups/public-snapshots</url>
+					<releases>
+						<enabled>false</enabled>
+					</releases>
+				</pluginRepository>
+			</pluginRepositories>
+			
+			<properties>
+				<jdk.version>1.7</jdk.version>
+				<nexus.url>http://code.it.savvis.net/nexus/content</nexus.url>
+				<owb.version>1.2.6</owb.version>
+			</properties>
+			
+			<build>
+				<pluginManagement>
+					<plugins>
+						<plugin>
+							<artifactId>maven-war-plugin</artifactId>
+							<configuration>
+								<warName>reporte</warName>
+							</configuration>
+						</plugin>
+					</plugins>
+				</pluginManagement>
+			</build>
+		</profile>
+	
+		<!-- openshift jenkins build profile -->
 		<profile>
 			<id>openshift</id>
 			<build>
@@ -117,6 +155,11 @@
 					</plugins>
 				</pluginManagement>
 			</build>
+			
+			<properties>
+				<jdk.version>1.7</jdk.version>
+				<owb.version>1.2.6</owb.version>
+			</properties>
 		</profile>
 	</profiles>
 </project>
