@@ -124,7 +124,7 @@
 						<plugin>
 							<artifactId>maven-war-plugin</artifactId>
 							<configuration>
-								<outputDirectory>webapps</outputDirectory>
+								<outputDirectory>deployments</outputDirectory>
 								<warName>reporte</warName>
 							</configuration>
 						</plugin>
