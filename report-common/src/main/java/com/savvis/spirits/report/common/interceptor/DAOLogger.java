@@ -55,22 +55,35 @@ public class DAOLogger {
 		String preOperationMsg = null;
 		String postOperationArg = null;
 		
-		switch (targetMethodName) {
-		case METHOD_INSERT :
+		if(METHOD_INSERT.equals(targetMethodName)){
 			preOperationMsg = PRE_PERSIST;
 			postOperationArg = OPERATION_INSERT;
-			break;
-		case METHOD_UPDATE :
+		}
+		else if(METHOD_UPDATE.equals(targetMethodName)){
 			preOperationMsg = PRE_MERGE;
 			postOperationArg = OPERATION_UPDATE;
-			break;
-		case METHOD_DELETE :
-			preOperationMsg = PRE_REMOVE;
-			postOperationArg = OPERATION_DELETE;
-			break;
-		default:
-			// Do Nothing.
 		}
+		else if(METHOD_DELETE.equals(targetMethodName)){
+			preOperationMsg = PRE_REMOVE;
+			postOperationArg = OPERATION_DELETE;			
+		}
+			
+//		switch (targetMethodName) {
+//		case METHOD_INSERT :
+//			preOperationMsg = PRE_PERSIST;
+//			postOperationArg = OPERATION_INSERT;
+//			break;
+//		case METHOD_UPDATE :
+//			preOperationMsg = PRE_MERGE;
+//			postOperationArg = OPERATION_UPDATE;
+//			break;
+//		case METHOD_DELETE :
+//			preOperationMsg = PRE_REMOVE;
+//			postOperationArg = OPERATION_DELETE;
+//			break;
+//		default:
+//			// Do Nothing.
+//		}
 		
 		logMsgTemplate.put(KEY_PRE_OPERATION_MSG, preOperationMsg);
 		logMsgTemplate.put(KEY_POST_OPREATION_ARG, postOperationArg);
